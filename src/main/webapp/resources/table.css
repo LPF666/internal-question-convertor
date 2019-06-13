@@ -1,0 +1,99 @@
+table {
+	border-collapse: collapse;
+	/*让表格居中*/
+	margin: 0px auto;
+}
+
+/*表格 btb样式开始*/
+table.btb {
+	border: 0px;
+	border-top: 1px solid #d1d1d1;
+	border-left: 1px solid #e1e1d1;
+	margin-left:5px;
+	width: 99%;
+}
+span{
+	font-size: 15px;
+}
+
+
+table.btb th {
+	border: 0px;
+	border-right: 1px solid #d1d1d1;
+	border-bottom: 1px solid #d1d1d1;
+	BACKGROUND-IMAGE: url(../../../resource/images/bg_th.gif);
+	background-color: #efefef;
+	text-align: center;
+	font-size: 9pt;
+	padding: 4px;
+}
+
+table.btb tbody tr.odd {
+	
+}
+
+table.btb  tbody tr.even {
+	/*行号是从0开始的，虽然是定义的偶数行的颜色，实际上在UI中为奇数行*/
+	background: #ecf6fc;
+}
+
+table.btb tbody tr.hover {
+	background: #bcd4ec;
+}
+
+table.btb tbody td {
+	border: 0px;
+	border-right: 1px solid #e1e1d1;
+	border-bottom: 1px solid #e1e1d1;
+	font-size: 9pt;
+	padding: 4px;
+	font-family: 宋体;
+}
+
+table.btb tbody td.string {
+	text-align: left;
+}
+
+table.btb tbody td.number {
+	text-align: right;
+}
+
+table.btb tbody td.date {
+	text-align: center;
+}
+table.thead-sub thead th {
+	border-bottom: 0px;
+}
+
+/*表格 btbForm样式开始*/
+table.btbForm {
+	margin-top:5px;
+	border: 1px solid #d1d1d1;
+	width: 99%;
+}
+
+table.btbForm thead th {
+	background-color: #efefef;
+	text-align: center;
+	font-size: 9pt;
+	padding: 4px;
+}
+
+table.btbForm tbody tr.odd {
+	/*行号是从0开始的，虽然是定义的奇数行的颜色，实际上在UI中为偶数行*/
+	background: #ecf6fc;
+}
+
+table.btbForm  tbody tr.even {
+}
+
+table.btbForm tbody tr.hover {
+	background: #bcd4ec;
+}
+
+table.btbForm tbody td {
+	border: 0px;
+	font-size: 9pt;
+	padding: 4px;
+	font-family: 宋体;
+}

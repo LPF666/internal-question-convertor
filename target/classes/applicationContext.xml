@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+        default-lazy-init="false"> 
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" 
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://113.108.235.182:8265/xuekubao?allowMultiQueries=true" />
+<!--         <property name="url" value="jdbc:mysql://192.168.11.160:4031/xuekubao" /> -->
+        <property name="username" value="content_library_test" />
+        <property name="password" value="con1te#st$@ary" />
+        <property name="maxActive" value="20"/>
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        
+        <property name="maxWait" value="60000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="20"/>
+        <property name="proxyFilters">
+            <ref bean="wall-filter"/>
+        </property>
+        <property name="filters" value="stat,wall,log4j"/>
+        <property name="connectionProperties" value="druid.stat.mergeSql=true"/>
+	</bean>
+	
+	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="dbType" value="mysql"/>
+        <property name="config" ref="wall-config"/>
+    </bean>
+	<bean id="wall-config" class="com.alibaba.druid.wall.WallConfig">
+        <!-- 批量sql -->
+        <property name="multiStatementAllow" value="true"/>
+    </bean>
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">	
+			<list>
+				<value>classpath:com/eebbk/**/dao/mapper/*.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.eebbk.internal.question.convertor.dao"/>
+	</bean>
+</beans>

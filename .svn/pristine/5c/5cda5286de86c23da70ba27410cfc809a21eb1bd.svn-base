@@ -1,0 +1,65 @@
+log4j.rootLogger=INFO,R
+
+log4j.logger.INFOLOG=,INFOLOG
+log4j.logger.WARNLOG=WARN,WARNLOG
+log4j.logger.ERRORLOG=ERROR,ERRORLOG
+
+log4j.additivity.INFOLOG=false
+log4j.additivity.WARNLOG=false
+log4j.additivity.ERRORLOG=false
+log4j.additivity.DEBUGLOG=false
+
+#root rolling file
+log4j.appender.R=org.apache.log4j.RollingFileAppender
+log4j.appender.R.File=logs/root.log 
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.MaxFileSize=10240KB 
+log4j.appender.R.MaxBackupIndex=2 
+log4j.appender.R.layout.ConversionPattern=%-5p %d [%t] %m%n
+
+#INFOLOG rolling file
+log4j.appender.INFOLOG=org.apache.log4j.RollingFileAppender
+log4j.appender.INFOLOG.File=logs/info.log 
+log4j.appender.INFOLOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.INFOLOG.MaxFileSize=10240KB 
+log4j.appender.INFOLOG.MaxBackupIndex=1 
+log4j.appender.INFOLOG.layout.ConversionPattern=%-5p %d [%t] %m%n
+
+#WARNLOG rolling file
+log4j.appender.WARNLOG=org.apache.log4j.RollingFileAppender
+log4j.appender.WARNLOG.File=logs/warn.log 
+log4j.appender.WARNLOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.WARNLOG.MaxFileSize=10240KB 
+log4j.appender.WARNLOG.MaxBackupIndex=1 
+log4j.appender.WARNLOG.layout.ConversionPattern=%-5p %d [%t] %F:%L %m%n
+
+#ERRORLOG rolling file
+log4j.appender.ERRORLOG=org.apache.log4j.RollingFileAppender
+log4j.appender.ERRORLOG.File=logs/error.log 
+log4j.appender.ERRORLOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.ERRORLOG.MaxFileSize=10240KB 
+log4j.appender.ERRORLOG.MaxBackupIndex=3 
+log4j.appender.ERRORLOG.layout.ConversionPattern=%-5p %d [%t] %m%n
+
+#sql extends root log congfigure
+#log4j.logger.java.sql.Connection=,
+#log4j.logger.java.sql.Statement=,
+#log4j.logger.java.sql.PreparedStatement=,
+#log4j.logger.java.sql.ResultSet=,
+
+#log4j.logger.javax.sql=debug
+#log4j.logger.com.ibatis=debug
+#log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=debug
+#log4j.logger.com.ibatis.common.jdbc.ScriptRunner=debug
+#log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=debug
+
+log4j.logger.javax.sql=DEBUG
+log4j.logger.com.ibatis=DEBUG
+log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=DEBUG
+log4j.logger.com.ibatis.common.jdbc.ScriptRunner=DEBUG
+log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG
+
+log4j.logger.org.springframework=WARN
+log4j.logger.com.mchange.v2=WARN
+log4j.logger.org.apache=WARN
+log4j.logger.org.displaytag=WARN

@@ -1,0 +1,7 @@
+#
+#Thu Feb 09 08:41:58 CST 2017
+info.version.modelNameCn=spring-mvc模板
+info.version.releaseTime=2017.04.06
+info.version.versionName=1.0.1
+info.version.modelNameEn=spring-mvc
+info.version.introduction=引入父模板1.0.2支持slf4j 1.7.17版本

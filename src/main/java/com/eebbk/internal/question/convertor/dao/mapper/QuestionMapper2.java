@@ -1,0 +1,81 @@
+package com.eebbk.internal.question.convertor.dao.mapper;
+
+
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
+
+import com.eebbk.internal.question.convertor.pojo.GradePojo;
+import com.eebbk.internal.question.convertor.pojo.QuestionXuekubaoPojo;
+import com.eebbk.internal.question.convertor.pojo.QuestionsPojo;
+import com.eebbk.internal.question.convertor.pojo.SubQuestionPojo;
+import com.eebbk.internal.question.convertor.pojo.SubjectPojo;
+import com.eebbk.internal.question.convertor.vo.DataCountsVo;
+import com.eebbk.internal.question.convertor.vo.GradeAndSubjectVo;
+import com.eebbk.internal.question.convertor.vo.QuestionXuekubaoQueryVo;
+import com.eebbk.internal.question.convertor.vo.QuestionsListVo;
+import com.eebbk.internal.question.convertor.vo.QuestionsVo;
+import com.eebbk.internal.question.convertor.vo.SubQuestionVo;
+
+public interface QuestionMapper2 {
+
+	Integer insertQuestionXuekubao(@Param("que") QuestionXuekubaoPojo que);
+
+	int insertQuestionXuekubaoBatch(List<QuestionXuekubaoPojo> questionXuekubaoQueryPojo);
+	
+	int updateQuestionXuekubaoBatch(@Param("list")List<QuestionXuekubaoPojo> questionXuekubaoQueryPojo);
+
+	int insertQuestionXuekubaoPaperBatch(List<QuestionXuekubaoPojo> questionXuekubaoQueryPojo);
+	
+	int updateQuestionXuekubaoPaperBatch(List<QuestionXuekubaoPojo> questionXuekubaoQueryPojo);
+
+	List<QuestionsVo> selectQuestionPage(Integer pageNum,Integer pageSize);
+	
+	List<QuestionsVo> selectQuestionPageByQueType(@Param("pageNum")Integer pageNum,@Param("pageSize")Integer pageSize,@Param("queType")Integer queType);
+
+	List<QuestionsVo> selectQuesitonsListByIds(@Param("Ids")List<Long> Ids,@Param("pageNum")int pageNum,@Param("pageSize") int pageSize);
+	
+	List<QuestionXuekubaoQueryVo> selectQuesitonsNoUploadListByIds(@Param("Ids")List<Long> next);
+
+	List<QuestionXuekubaoQueryVo> selectXuekubaoQuesitonsListByIds(@Param("Ids")List<Long> Ids,@Param("pageNum")Integer pageNum,@Param("pageSize") Integer pageSize);
+
+	List<QuestionXuekubaoQueryVo> selectXuekubaoQuesitonsUnuploadPicListByIds(@Param("Ids")List<Long> Ids,@Param("pageNum")Integer pageNum,@Param("pageSize") Integer pageSize);
+	
+	List<SubQuestionVo> selectSubQuestionByQueId(Integer pid);
+
+	Integer selectQuesitonIsExist(@Param("idOld")Integer idOld);
+
+	Integer updateQuestionXuekubao(@Param("que")QuestionXuekubaoPojo questionXuekubao);
+
+	List<GradePojo> selectAllGrade();
+	
+	List<GradeAndSubjectVo> selectAllSubjectByGradeName(@Param("gradeName")String gradeName);
+
+	List<QuestionXuekubaoQueryVo> getQuestionFileBysubject();
+	
+	List<DataCountsVo> getQueCountsNoImg();
+	
+	List<DataCountsVo> getNoExistSituationByContent();
+	
+	List<DataCountsVo> getNoExistSituationByAnswer();
+	
+	List<DataCountsVo> getNoExistSituationBySolution();
+	
+	List<DataCountsVo> getQueCountsByGradeAndSubject();
+	
+	List<DataCountsVo> getQueCountsByGrade();
+	
+	List<DataCountsVo> getQueCountsBysubject();
+	
+	Integer getTotalQueCounts();
+
+	List<QuestionsVo> selectQuestionPage(@Param("pageNum")int pageNum,@Param("pageSize") int pageSize);
+	
+	List<QuestionsVo> selectQuestionPagePaper(@Param("pageNum")int pageNum,@Param("pageSize") int pageSize);
+
+	List<QuestionsVo> selectQuestionPageAll(@Param("pageNum")int pageNum,@Param("pageSize") int pageSize);
+
+	void insertQuestionUnuploadBatch(List<QuestionXuekubaoQueryVo> selectXuekubaoQuesitonsUnuploadPicListByIds);
+
+
+}

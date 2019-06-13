@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        "
+        default-lazy-init="false"> 
+    
+    <!-- 原理参照  实现默认配置在application.properties 根据其中的参数配置引入相应的配置文件
+    https://segmentfault.com/q/1010000006823872 
+    http://hw1287789687.iteye.com/blog/2325383 
+    http://blog.csdn.net/wadecheri/article/details/38026435
+    -->  
+    <!-- <context:property-placeholder location="classpath:log4j-dev.properties" ignore-unresolvable="true" order="1" /> -->
+    <context:property-placeholder location="classpath:application.properties" ignore-unresolvable="true" order="1" />
+    
+    <context:property-placeholder location="classpath:application-${spring.profiles.active}.properties" ignore-unresolvable="true" order="2" />
+    
+    <!-- 配置日志 -->  
+<!--     <bean id="log4jInitialization"  
+     class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">  
+      <property name="targetClass"  
+          value="org.springframework.util.Log4jConfigurer" />  
+       <property name="targetMethod" value="initLogging" />  
+      <property name="arguments">  
+          <list>  
+             <value>classpath:log4j-dev.properties</value>  
+          </list>  
+       </property>  
+    </bean>   -->
+    
+    <bean id="myGzipDealer" class="com.eebbk.edu.common.web.response.dealer.impl.GzipDealer"></bean>
+<!--     <bean id="myCipherDealer" class="com.eebbk.edu.common.web.response.dealer.impl.DesDealer">
+    	<property name="desKey" value="1238976546487879789787878"/>
+    </bean> -->
+    
+    <bean id="resultVoTemplate" class="com.eebbk.edu.common.web.template.ResultVoTemplate">
+    	<property name="zipDealer" ref="myGzipDealer"/>
+    	<!-- <property name="cipherDealer" ref="myCipherDealer"/> -->
+    </bean>
+    
+    <import resource="spring-jdbc.xml"/>
+    <import resource="spring-redis.xml"/>
+    <import resource="spring-quartz.xml"/>
+</beans>

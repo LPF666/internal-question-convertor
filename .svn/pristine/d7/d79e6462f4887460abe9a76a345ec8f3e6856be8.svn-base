@@ -1,0 +1,21 @@
+log4j.rootLogger=INFO,stdout
+log4j.logger.com.eebbk=INFO,stdout
+
+#让com.eebbk下的logger不继承父类的appender
+log4j.additivity.com.eebbk=false
+
+# console configuration
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%C] [%L] - %m%n
+
+log4j.logger.javax.sql=DEBUG
+log4j.logger.com.ibatis=DEBUG
+log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=DEBUG
+log4j.logger.com.ibatis.common.jdbc.ScriptRunner=DEBUG
+log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=DEBUG
+
+log4j.logger.org.springframework=WARN
+log4j.logger.com.mchange.v2=WARN
+log4j.logger.org.apache=WARN
+log4j.logger.org.displaytag=WARN

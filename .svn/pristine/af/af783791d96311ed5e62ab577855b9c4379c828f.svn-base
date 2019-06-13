@@ -1,0 +1,29 @@
+body{background-color: #fbfbfa !important;}
+.css_qustion_top{
+	height: 90px;
+	font-size: 30px;
+	background:rgb(13,57,92)
+}
+.css_qustion_top>span{
+	font-size: 26px;
+	font-family: "Î¢ÈíÑÅºÚ";
+	color: #FFF;
+	padding-left: 200px;
+	line-height: 75px;
+}
+.css_middle{
+	width: 1500px!important;
+	margin:0 auto!important;
+	margin-top:20px;
+	height: 80%; 
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+.css_shouye{
+	font-size: 25px;
+	color: #585858;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	margin: 0px;
+}

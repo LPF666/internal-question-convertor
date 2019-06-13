@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        "
+        default-lazy-init="false"> 
+	
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <property name="driverClassName" value="${spring.datasource.driverClassName}" />
+        <property name="url" value="${spring.datasource.url}" />
+        <property name="username" value="${spring.datasource.username}" />
+        <property name="password" value="${spring.datasource.password}" />
+		
+        <property name="maxActive" value="${spring.datasource.maxActive}"/>
+        <property name="initialSize" value="${spring.datasource.initialSize}"/>
+        <property name="minIdle" value="${spring.datasource.minIdle}"/>
+        <property name="maxWait" value="${spring.datasource.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="${spring.datasource.timeBetweenEvictionRunsMillis}"/>
+        <property name="minEvictableIdleTimeMillis" value="${spring.datasource.timeBetweenEvictionRunsMillis}"/>
+        <property name="validationQuery" value="${spring.datasource.validationQuery}"/>
+        <property name="testWhileIdle" value="${spring.datasource.testWhileIdle}"/>
+        <property name="testOnBorrow" value="${spring.datasource.testOnBorrow}"/>
+        <property name="testOnReturn" value="${spring.datasource.testOnReturn}"/>
+        <property name="poolPreparedStatements" value="${spring.datasource.poolPreparedStatements}"/>
+        <property name="maxOpenPreparedStatements" value="${spring.datasource.maxOpenPreparedStatements}"/>
+        <property name="filters" value="${spring.datasource.filters}"/>
+        <property name="connectionProperties" value="${spring.datasource.connectionProperties}"/>
+    </bean>
+	
+    <!-- SqlSessionTemplate是MyBatis-Spring的核心。 这个类负责管理MyBatis的SqlSession,调用MyBatis的SQL方法， 
+    翻译异常。SqlSessionTemplate是线程安全的，可以被多个DAO所共享使用。 -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+	
+    <!-- mybatis的SqlSessionFactoryBean用于进行数据库操作 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+        <property name="dataSource" ref="dataSource"/> 
+        <property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
+        <property name="mapperLocations">	
+			<list>
+				<value>classpath:com/eebbk/**/dao/mapper/*.xml</value>
+			</list>
+		</property>
+    </bean>
+    
+    <!-- 自动扫描 mybatis mapper接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.eebbk.**.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+	
+    <!-- 配置事务管理器bean dataSource -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- 声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/> 
+	
+    <!-- 定义事务通知 经测试可以处理继承自runtimeException的异常，mybatis的大部分异常继承于此，无特殊要求不需要抓取其他异常-->  
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">  
+        <!-- 定义方法的过滤规则 -->  
+        <tx:attributes>  
+            <!-- 所有方法都使用事务 -->  
+            <tx:method name="insert*" propagation="REQUIRED"/>  
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>  
+    </tx:advice>  
+</beans>

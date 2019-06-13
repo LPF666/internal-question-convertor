@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eebbk.internal.question.convertor.dao.QuestionMapper" >
+ 
+  <select id="selectQuestion" resultType="com.eebbk.internal.question.convertor.vo.QuestionsVo">
+			SELECT
+				a.id,
+				a.title,
+				a.option_a as optionA,
+				a.option_b as optionB,
+				a.option_c as optionC,
+				a.option_d as optionD,
+				a.option_e as optionE,
+				a.answer1,
+				a.answer2,
+				a.parse,
+				a.qtpye,
+				b.gradeName,
+				c.subjectName
+			FROM
+				questions a
+			LEFT JOIN grade b ON a.gradeId = b.gradeId
+			LEFT JOIN SUBJECT c ON a.subjectId = c.subjectId
+			order by a.id ASC
+<!-- 		    WHERE -->
+<!-- 		    a.id=17853566 -->
+<!-- 		        a.subjectId=3        -->
+<!-- 		AND a.title like concat('%','upimages','%') -->
+<!-- 			LIMIT 0,1000 -->
+  </select>
+  
+  <select id="selectQuestionPage" parameterType="java.lang.Integer" resultType="com.eebbk.internal.question.convertor.vo.QuestionsVo">
+			SELECT
+				a.id,
+				a.title,
+				a.option_a as optionA,
+				a.option_b as optionB,
+				a.option_c as optionC,
+				a.option_d as optionD,
+				a.option_e as optionE,
+				a.answer1,
+				a.answer2,
+				a.parse,
+				a.qtpye,
+				a.isSub,
+				a.isNormal,
+				b.gradeName,
+				c.subjectName
+			FROM
+				questions a
+			LEFT JOIN grade b ON a.gradeId = b.gradeId
+			LEFT JOIN SUBJECT c ON a.subjectId = c.subjectId
+		    order by a.id ASC
+		    limit  #{pageNum},#{pageSize}
+<!-- 		    WHERE -->
+<!-- 		    a.id=17853566 -->
+<!-- 		        a.subjectId=3        -->
+<!-- 		AND a.title like concat('%','upimages','%') -->
+<!-- 			LIMIT 0,1000 -->
+  </select>
+  <select id="selectAllGrade" resultType="com.eebbk.internal.question.convertor.pojo.GradePojo">
+  		SELECT 
+  		    gradeId,gradeName
+  		FROM 
+  			grade
+  </select>
+  
+  <select id="selectAllSubjectByGradeName" parameterType="java.lang.String" resultType="com.eebbk.internal.question.convertor.vo.GradeAndSubjectVo">
+		SELECT DISTINCT
+			b.gradeName,
+			c.subjectName
+		FROM
+			questions a,
+			grade b,
+			SUBJECT c
+		WHERE
+			a.gradeId = b.gradeId
+		AND a.subjectId = c.subjectId
+		<if test="gradeName!=null">
+			AND b.gradeName = #{gradeName}
+		</if>
+		ORDER BY
+			b.gradeId
+  </select>
+  
+  <select id="selectSubQuestionByQueId" parameterType="java.lang.Integer" resultType="com.eebbk.internal.question.convertor.vo.SubQuestionVo">
+		SELECT
+			a.id,
+			a.title,
+			a.option_a AS optionA,
+			a.option_b AS optionB,
+			a.option_c AS optionC,
+			a.option_d AS optionD,
+			a.answer1 AS answer1,
+			a.answer2 AS answer2,
+			a.parse AS parse
+		FROM
+			subquestions a
+		WHERE a.pid=#{pid}
+  </select>
+  
+  
+  
+  <select id="selectQuesitonIsExist" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT
+			count(a.id_old) AS count
+		FROM
+			t_question_xuekebao a
+		WHERE a.id_old=#{idOld}
+  </select>
+  
+     <select id="selectXuebaoListPage"  resultType="com.eebbk.internal.question.convertor.vo.QuestionXuekubaoQueryVo">
+   
+   		select a.id,a.id_old as idOld,a.content,a.answer,a.solution,a.course,a.grade 
+   		,a.pic_exist_flag as picExistFlag,
+   		a.content_exist_flag as contentExistFlag,
+   		a.answer_exist_flag as answerExistFlag,
+   		parse_exist_flag as parseExistFlag,
+   		qiniu_flag as qiniuFlag
+   		from t_question_xuekebao a
+   		<where>
+			<if test="id!=null">
+				id = #{id}
+			</if>
+			<if test="idOld!=null">
+				id_old = #{idOld}
+			</if>
+			<if test="grade!=null">
+				and grade like concat('%',#{grade},'%')
+				
+			</if>
+			<if test="course!=null">
+				and course like concat('%',#{course},'%')
+			</if>
+			<if test="startTime!=null">
+				and date_format(create_time, '%Y-%m-%d')>=date_format(#{startTime}, '%Y-%m-%d')
+			</if>
+<!-- 			<if test="endTime!=null"> -->
+<!-- 				and date_format(create_time, '%Y-%m-%d')<=date_format(#{endTime}, '%Y-%m-%d') -->
+<!-- 			</if> -->
+		</where>	
+		order by id desc
+   
+   </select>
+  <insert id="insertQuestionXuekubao" parameterType="com.eebbk.internal.question.convertor.pojo.QuestionXuekubaoPojo" >
+		INSERT INTO t_question_xuekebao (
+			id_old,
+			content,
+			answer,
+			solution,
+			course,
+			grade,
+			pic_exist_flag,
+			create_time
+		)
+		VALUES
+			(
+			    #{que.idOld},
+				#{que.content},
+				#{que.answer},
+				#{que.solution},
+				#{que.course},
+				#{que.grade},
+				#{que.picExistflag},
+				#{que.createTime}
+			)
+		
+		<selectKey keyColumn="id" keyProperty="que.id" order="AFTER" resultType="java.lang.Integer">
+				SELECT LAST_INSERT_ID()
+		</selectKey>	
+  </insert>
+   
+	
+    <insert id="insertQuestionXuekubaoBatch" parameterType="com.eebbk.internal.question.convertor.pojo.QuestionXuekubaoPojo" keyProperty="id" useGeneratedKeys="true">
+        replace into t_question_xuekebao
+            (id_old,content, answer, solution,course,grade,pic_exist_flag,content_exist_flag,answer_exist_flag,parse_exist_flag,qiniu_flag,create_time)
+        values
+       	<foreach collection="list" item="item" index="index" separator=",">
+            (#{item.idOld},#{item.content},#{item.answer},#{item.solution},#{item.course},#{item.grade},#{item.picExistflag},#{item.contentExistFlag},#{item.answerExistFlag},#{item.parseExistFlag},#{item.qiniuFlag},#{item.createTime})
+        </foreach> 
+    </insert>	
+   <update id="updateQuestionXuekubao" parameterType="com.eebbk.internal.question.convertor.pojo.QuestionXuekubaoPojo">
+		update t_question_xuekebao  set 
+		    content= #{que.content},
+			answer = #{que.answer},
+	        solution = #{que.solution},
+	        course = #{que.course},
+	        grade = #{que.grade},
+	        pic_exist_flag=#{que.picExistflag},
+	        content_exist_flag=#{que.contentExistFlag},
+	        answer_exist_flag=#{que.answerExistFlag},
+	        parse_exist_flag=#{que.parseExistFlag},
+	        update_time = #{que.createTime}
+        WHERE 
+        	id_old = #{que.idOld}
+	</update>
+   <select id="getQuestionFileBysubject" resultType="com.eebbk.internal.question.convertor.vo.QuestionXuekubaoQueryVo">
+   		SELECT
+			a.id_old,
+			a.course,
+			a.content,
+			a.answer,
+			a.solution
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.course
+	</select>
+	
+	<select id="getQueCountsBysubject" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			a.course,
+			count(id)
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.course
+	</select>
+	
+	<select id="getQueCountsByGrade" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			a.grade as fieldNameOne,
+			count(id) as fieldCount
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.grade
+	</select>
+	
+	<select id="getQueCountsByGradeAndSubject" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			a.grade as fieldNameOne,
+			a.course as fieldNameTwo,
+			count(id) as fieldCount
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.grade,
+			a.course
+	</select>
+	
+	<select id="getQueCountsNoImg" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			COUNT(pic_exist_flag) as fieldCount,
+			a.pic_exist_flag as  fieldNameOne
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.pic_exist_flag
+	</select>	
+	
+	<select id="getNoExistSituationByContent" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			COUNT(id) as fieldCount,
+			a.content_exist_flag as fieldNameOne
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.content_exist_flag
+	</select>
+	
+	<select id="getNoExistSituationByAnswer" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			COUNT(id) as fieldCount,
+			a.answer_exist_flag as fieldNameOne
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.answer_exist_flag
+	</select>	
+	
+	<select id="getNoExistSituationBySolution" resultType="com.eebbk.internal.question.convertor.vo.DataCountsVo">
+		SELECT
+			COUNT(id) as fieldCount,
+			a.parse_exist_flag as fieldNameOne
+		FROM
+			t_question_xuekebao a
+		GROUP BY
+			a.parse_exist_flag	
+	</select>
+	
+	<select id="getTotalQueCounts" resultType="java.lang.Integer">
+		SELECT
+			count(id) as count
+		FROM
+			t_question_xuekebao a
+	</select>
+	
+</mapper>

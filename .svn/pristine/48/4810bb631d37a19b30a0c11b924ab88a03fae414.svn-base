@@ -1,0 +1,7 @@
+#
+#Thu Feb 09 08:41:58 CST 2017
+info.version.modelNameCn=spring-mvc模板
+info.version.releaseTime=2016.12.21
+info.version.versionName=1.0.0
+info.version.modelNameEn=spring-mvc
+info.version.introduction=1.模板目录规范\r2.数据源采用druid\r3.版本管理特性\r4.swagger api自动生成工具\r5.不同环境配置文件规范\r

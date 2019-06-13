@@ -1,0 +1,28 @@
+﻿.my_pagination {
+	min-height: 25px;
+}
+
+.my_pagination a {
+	text-decoration: none;
+	border: solid 1px #AAE;
+	color: #15B;
+}
+
+.my_pagination a,.my_pagination span {
+	float: left;
+	padding: 0.3em 0.5em;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.my_pagination .current {
+	background: #87cefa;
+	color: #fff;
+	border: solid 1px #AAE;
+}
+
+.my_pagination .current.prev,.my_pagination .current.next {
+	color: #999;
+	border-color: #999;
+	background: #fff;
+}

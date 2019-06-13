@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 引用系统全局配置文件 -->
+	<properties resource="application.properties" />
+	<settings>
+	      <!-- 不延迟加载 -->
+		  <setting name="lazyLoadingEnabled" value="false" />
+		  <!-- 不使用缓存 -->
+		  <setting name="cacheEnabled" value="false"/>
+		  <!-- 支持下划线转驼峰式命名 -->
+          <setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<!-- 在mappers定义之前 -->
+<!-- 	<typeHandlers>
+		<typeHandler javaType="Boolean" jdbcType="SMALLINT" handler="com.eebbk.common.core.mybatis.BooleanTypeHandler" />
+	</typeHandlers> -->
+
+	<!-- 数据库适配器 -->
+	<plugins>
+		<plugin interceptor="com.eebbk.edu.common.framework.core.mybatis.interceptor.ExecutorInterceptor">
+			<property name="dialectClass" value="${dialectClass}" />
+		</plugin>
+	</plugins>
+</configuration> 

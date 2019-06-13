@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.eebbk.edu.common</groupId>
+		<artifactId>common-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../common-parent</relativePath>
+	</parent>
+	<groupId>com.eebbk</groupId>
+	<artifactId>internal-question-convertor</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+	<description>internal-question-convertor</description>
+
+	<name>internal-question-convertor</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-mvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-log</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-util-extend</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-framework</artifactId>
+		</dependency>
+		<!-- redis -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.eebbk</groupId> -->
+<!-- 			<artifactId>jedis-wrapper</artifactId> -->
+<!-- 		</dependency> -->
+		<dependency>
+   			<groupId>com.eebbk</groupId>
+   			<artifactId>jedis-wrapper</artifactId>
+   			<version>6.0.2</version>
+  		</dependency>
+  		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-pool2</artifactId>
+<!-- 		  <version>2.0</version> -->
+		</dependency>
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-http</artifactId>
+		</dependency>
+		<!-- 版本管理 -->
+		<dependency>
+			<groupId>com.eebbk</groupId>
+			<artifactId>common-version</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-dataio</artifactId>
+			<version>[1.0.0, 2.0.0)</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.eebbk.edu.common</groupId>
+			<artifactId>common-cloudfile</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-net</groupId>
+		    <artifactId>commons-net</artifactId>
+		    <version>3.6</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>internal-question-convertor</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<archive>  
+	                    <manifest>  
+	                        <addClasspath>true</addClasspath>  
+	                        <classpathPrefix></classpathPrefix>  
+	                        <mainClass>com.eebbk.internal.question.convertor.exportjar.UploadData1</mainClass>
+	                    </manifest>  
+              		  </archive>  
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/resources/assembly/assembly.xml</descriptor>
+					</descriptors>
+					<descriptorRefs>
+                    	<descriptorRef>jar-with-dependencies</descriptorRef>
+                	</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
+	</build>
+</project>

@@ -1,0 +1,83 @@
+#公共配置文件
+#可配值dev（开发环境）、test（测试环境）、real（生产环境）
+spring.profiles.active=dev
+
+#swagger路径配置
+springfox.documentation.swagger.v2.path=/admin/swagger
+
+# mybatis settings
+mybatis.mapperLocations=classpath:com/eebbk/**/mapper/*.xml
+mybatis.configLocation=classpath:mybatis-config.xml
+
+#default datasource
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+
+#more base data 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙 
+#spring.datasource.filters=stat
+spring.datasource.maxActive=20
+spring.datasource.initialSize=1
+spring.datasource.minIdle=1
+spring.datasource.maxWait=60000
+# 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+spring.datasource.timeBetweenEvictionRunsMillis=60000
+# 配置一个连接在池中最小生存的时间，单位是毫秒
+spring.datasource.minEvictableIdleTimeMillis=300000
+spring.datasource.validationQuery=SELECT 1 FROM DUAL
+spring.datasource.testWhileIdle=true
+spring.datasource.testOnBorrow=false
+spring.datasource.testOnReturn=false
+# 打开PSCache，并且指定每个连接上PSCache的大小
+spring.datasource.poolPreparedStatements=true
+spring.datasource.maxOpenPreparedStatements=20
+
+# 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙 
+spring.datasource.filters=stat,wall,log4j
+# 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+spring.datasource.connectionProperties=druid.stat.mergeSql=true;
+druid.stat.slowSqlMillis=5000
+# 合并多个DruidDataSource的监控数据
+#spring.datasource.useGlobalDataSourceStat=true
+
+#数据库
+#数据库方言
+dialectClass=com.eebbk.edu.common.framework.core.mybatis.dialect.MySqlDialect
+#批量更新、插入、删除数量
+db.batch.count = 100
+
+#打印接口信息
+#是否打印接口参数  true:打印；false:不打印 
+interface.param=true
+#是否打印方法描述 true:打印；false:不打印
+interface.method.description=flase
+#参数分割符
+interface.param.separator=  
+#是否打印接口参数描述  true:打印；false:不打印
+interface.param.description=false
+#是否打印返回值 true:打印；false:不打印 
+interface.return.value=true
+#是否打印接口耗时 true:打印；false:不打印
+interface.timeConsuming=true
+
+#controller接口参数校验
+aspect.controller.checkParam=true
+
+#项目环境配置
+#项目环境编码,项目所有的代码统一使用这个编码进行设置默认编码，默认为UTF-8
+#对应的类属性为com.eebbk.edu.common.util.constant.Encode.ENV_ENCODE
+env.encode = UTF-8
+
+#其它
+#webAppRootKey配置
+web.app.root.key = internal-question-convertor.root
+
+#配置http性能参数
+#eebbk.http.connect.timeout=60
+#eebbk.http.read.timeout=60
+#eebbk.http.write.timeout=60
+#eebbk.http.connect.timeout.q=3
+#eebbk.http.read.timeout.q=3
+#eebbk.http.write.timeout.q=3
+#eebbk.http.ca.path=D:\\xx2\\cers
+#eebbk.http.proxy.ip=172.28.10.203
+#eebbk.http.proxy.port=8888
