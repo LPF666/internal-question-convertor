@@ -245,6 +245,5 @@
 	</div>
 	   
 		<div style="height: 200px"></div>
-<%-- 		${rep.picExistflag },${rep.contentExistFlag },${rep.answerExistFlag },${rep.parseExistFlag },${rep.qiniuFlag } --%>
 </body>
 </html>
